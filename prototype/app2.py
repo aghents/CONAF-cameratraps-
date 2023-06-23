@@ -1,6 +1,4 @@
 import os
-import tkinter as tk
-from tkinter import filedialog
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 
@@ -32,30 +30,10 @@ def upload_folder_to_drive(folder_path, parent_folder_id=None):
             upload_folder_to_drive(file_path, folder['id'])
 
     print(f"Folder uploaded: {folder_name}")
-    return folder_name
 
-def upload_files_to_drive(directory_path):
-    folder_name = upload_folder_to_drive(directory_path)
-    info_label.config(text=f"Authentication successful.\nFolder uploaded: {folder_name}")
+# Specify the path of the folder containing the images
+folder_path = 'example_folder'
 
-def browse_directory():
-    directory = filedialog.askdirectory()
-    if directory:
-        print("Selected directory:", directory)
-        upload_files_to_drive(directory)
+# Call the function to upload the folder and its contents
+upload_folder_to_drive(folder_path)
 
-def create_window():
-    window = tk.Tk()
-    window.title("File Uploader")
-
-    directory_button = tk.Button(window, text="Upload Directory", command=browse_directory)
-    directory_button.pack(pady=10)
-
-    global info_label
-    info_label = tk.Label(window, text="")
-    info_label.pack(pady=10)
-
-    window.mainloop()
-
-# Run the application
-create_window()
